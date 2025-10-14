@@ -10,6 +10,7 @@ from datetime import datetime
 from lente import Lente
 from montura import Montura
 import os
+import uuid
 
 class Main:
     def __init__(self):
@@ -92,36 +93,40 @@ class Main:
         print("2.- Inventario")
         print("3.- Personal")
         print("4.- Ventas")
+        print("5.- Cerrar sistema")
         print("")
 
-        # try:
-        opcion = int(input("Elige una opcion > "))
+        try:
+            opcion = int(input("Elige una opcion > "))
 
-        if opcion > 0 and opcion < 5:
-            
-            if opcion == 1:
-                self.opcionAgenda()
+            if opcion > 0 and opcion < 6:
+                
+                if opcion == 1:
+                    self.opcionAgenda()
 
-            elif opcion == 2:
-                self.opcionInventario()
+                elif opcion == 2:
+                    self.opcionInventario()
 
-            elif opcion == 3:
-                self.opcionPersonal()
+                elif opcion == 3:
+                    self.opcionPersonal()
 
-            elif opcion == 4:
-                pass
+                elif opcion == 4:
+                    self.opcionVentas()
+
+                elif opcion == 5:
+                    exit()
+
+                else:
+                    input("Has ingresado una opcion incorrecta. Presiona Enter para continuar")
+                    self.menu()
 
             else:
                 input("Has ingresado una opcion incorrecta. Presiona Enter para continuar")
                 self.menu()
 
-        else:
-            input("Has ingresado una opcion incorrecta. Presiona Enter para continuar")
+        except Exception as e:
+            input("Ingresaste una opcion incorrecta. Presiona Enter para continuar")
             self.menu()
-
-        # except Exception as e:
-        #     input("Ingresaste una opcion incorrecta. Presiona Enter para continuar")
-        #     self.menu()
 
     def opcionAgenda(self):
         self.limpiar_pantalla()
@@ -135,93 +140,93 @@ class Main:
         print("4.- Salir")
         print("")
 
-        # try:
-        opcion = int(input("Elige una opcion > "))
+        try:
+            opcion = int(input("Elige una opcion > "))
 
-        if opcion > 0 and opcion < 5:
-            
-            if opcion == 1:
-                print(self.agenda.citas)
-                self.agenda.ver_agenda()
-                input("\nPresionar enter para regresar.")
-                self.opcionAgenda()
-
-            elif opcion == 2:
-                dni_paciente = input("Ingresa el dni del paciente > ")
-
-                paciente_encontrado = None
-                paciente_creado = None
-
-                for paciente in self.pacientes:
-                    if(paciente.dni == dni_paciente):
-                        paciente_encontrado = paciente
-
-                if(paciente_encontrado != None):
-                    print(f"\nSe ha encontrado al paciente con DNI {dni_paciente}\n")
+            if opcion > 0 and opcion < 5:
                 
-                else:
-                    nombre_paciente = input("Ingresa el nombre del paciente > ")
-                    apellido_paciente = input("Ingresa el apellido del paciente > ")
-                    telefono_paciente = input("Ingresa el telefono del paciente > ")
-                    direccion_paciente = input("Ingresa el direccion del paciente > ")
+                if opcion == 1:
+                    print(self.agenda.citas)
+                    self.agenda.ver_agenda()
+                    input("\nPresionar enter para regresar.")
+                    self.opcionAgenda()
 
-                    paciente_creado = Paciente(dni_paciente, nombre_paciente, apellido_paciente, telefono_paciente, direccion_paciente)
+                elif opcion == 2:
+                    dni_paciente = input("Ingresa el dni del paciente > ")
 
-                    self.pacientes.append(paciente_creado)
+                    paciente_encontrado = None
+                    paciente_creado = None
 
-                dni_optometrista = input("Ingresa el dni del optometrista > ")
+                    for paciente in self.pacientes:
+                        if(paciente.dni == dni_paciente):
+                            paciente_encontrado = paciente
 
-                optometrista_encontrado = None
-                optometrista_creado = None
+                    if(paciente_encontrado != None):
+                        print(f"\nSe ha encontrado al paciente con DNI {dni_paciente}\n")
+                    
+                    else:
+                        nombre_paciente = input("Ingresa el nombre del paciente > ")
+                        apellido_paciente = input("Ingresa el apellido del paciente > ")
+                        telefono_paciente = input("Ingresa el telefono del paciente > ")
+                        direccion_paciente = input("Ingresa el direccion del paciente > ")
 
-                for optometrista in self.optometristas:
-                    if(optometrista.dni == dni_optometrista):
-                        optometrista_encontrado = optometrista
+                        paciente_creado = Paciente(dni_paciente, nombre_paciente, apellido_paciente, telefono_paciente, direccion_paciente)
 
-                if(optometrista_encontrado != None):
-                    print(f"\nSe ha encontrado al optometrista con DNI { dni_optometrista }\n")
+                        self.pacientes.append(paciente_creado)
+
+                    dni_optometrista = input("Ingresa el dni del optometrista > ")
+
+                    optometrista_encontrado = None
+                    optometrista_creado = None
+
+                    for optometrista in self.optometristas:
+                        if(optometrista.dni == dni_optometrista):
+                            optometrista_encontrado = optometrista
+
+                    if(optometrista_encontrado != None):
+                        print(f"\nSe ha encontrado al optometrista con DNI { dni_optometrista }\n")
+                    
+                    else:
+                        nombre_optometrista = input("Ingresa el nombre del optometrista > ")
+                        apellido_optometrista = input("Ingresa el apellido del optometrista > ")
+                        telefono_optometrista = input("Ingresa el telefono del optometrista > ")
+                        direccion_optometrista = input("Ingresa el direccion del optometrista > ")
+                        id_medico = input("Ingresa el id del medico > ")
+                        especialidad_optometrista = input("Ingresa el direccion del optometrista > ")
+
+                        optometrista_creado = Optometrista(dni_optometrista, nombre_optometrista, apellido_optometrista, telefono_optometrista, direccion_optometrista, id_medico, especialidad_optometrista)
+
+                        self.optometristas.append(optometrista_creado)
+
+                    cita = Cita( (paciente_encontrado if paciente_encontrado != None else paciente_creado), (optometrista_creado if optometrista_encontrado == None else optometrista_encontrado), datetime.now().strftime("%Y-%m-%d %H:%M"))
+
+                    self.agenda.agendar_cita(cita)
+
+                    cita.confirmar()                    
+
+                    input("Se ha generado la cita!. Presiona Enter para continuar")
+                    self.opcionAgenda()
+
+                elif opcion == 3:
+                    self.agenda.generar_reporte()
+                    input("Se ha generado el reporte!. Presiona Enter para continuar")
+                    self.opcionAgenda()
                 
+                elif opcion == 4:
+                    self.menu()
+
                 else:
-                    nombre_optometrista = input("Ingresa el nombre del optometrista > ")
-                    apellido_optometrista = input("Ingresa el apellido del optometrista > ")
-                    telefono_optometrista = input("Ingresa el telefono del optometrista > ")
-                    direccion_optometrista = input("Ingresa el direccion del optometrista > ")
-                    id_medico = input("Ingresa el id del medico > ")
-                    especialidad_optometrista = input("Ingresa el direccion del optometrista > ")
-
-                    optometrista_creado = Optometrista(dni_optometrista, nombre_optometrista, apellido_optometrista, telefono_optometrista, direccion_optometrista, id_medico, especialidad_optometrista)
-
-                    self.optometristas.append(optometrista_creado)
-
-                cita = Cita( (paciente_encontrado if paciente_encontrado != None else paciente_creado), (optometrista_creado if optometrista_encontrado == None else optometrista_encontrado), datetime.now().strftime("%Y-%m-%d %H:%M"))
-
-                self.agenda.agendar_cita(cita)
-
-                cita.confirmar()                    
-
-                input("Se ha generado la cita!. Presiona Enter para continuar")
-                self.opcionAgenda()
-
-            elif opcion == 3:
-                self.agenda.generar_reporte()
-                input("Se ha generado el reporte!. Presiona Enter para continuar")
-                self.opcionAgenda()
-            
-            elif opcion == 4:
-                self.menu()
+                    input("Has ingresado una opcion incorrecta. Presiona Enter para continuar")
+                    self.opcionAgenda()
 
             else:
                 input("Has ingresado una opcion incorrecta. Presiona Enter para continuar")
                 self.opcionAgenda()
 
-        else:
-            input("Has ingresado una opcion incorrecta. Presiona Enter para continuar")
+        except Exception as e:
+            print(e)
+            input("Ingresaste una opcion incorrecta. Presiona Enter para continuar")
             self.opcionAgenda()
-
-        # except Exception as e:
-        #     print(e.)
-        #     input("Ingresaste una opcion incorrecta. Presiona Enter para continuar")
-        #     self.opcionAgenda()
 
 
     def opcionInventario(self):
@@ -347,8 +352,62 @@ class Main:
 
         self.menu()
 
-    def ventas(self):
-        pass
+    def opcionVentas(self):
+        self.limpiar_pantalla()
+        print("##########################################")
+        print("#           Tu Ojo - Ventas              #")
+        print("##########################################")
+        print("")
+        print("1.- Registrar nueva venta")
+        print("2.- Salir")
+        print("")
+
+        opcion = int(input("Elige una opcion > "))
+
+        if opcion == 1:
+            dni_paciente = input("Ingresa el DNI del paciente > ")
+            paciente_encontrado = None
+
+            for paciente in self.pacientes:
+                if paciente.dni == dni_paciente:
+                    paciente_encontrado = paciente
+
+            if paciente_encontrado is None:
+                print("Paciente no encontrado, primero debes registrarlo en la agenda.")
+                input("Presiona Enter para continuar.")
+                self.opcionVentas()
+                return
+            
+            productos = []
+
+            monto = 0
+
+            while True:
+                sku = input("Ingresa SKU del producto (o 'fin' para terminar) > ")
+
+                if sku.lower() == "fin":
+                    break
+
+                producto = self.inventario.buscar_producto(sku)
+
+                if producto is None:
+                    print("Producto no encontrado.")
+                    continue
+                productos.append(producto)
+
+            venta = Venta( uuid.uuid4(), datetime.now().strftime("%Y-%m-%d %H:%M"), productos, paciente_encontrado )
+
+            print(venta.entregar_comprobante())
+
+            input("\nVenta registrada con éxito. Presiona Enter para continuar.")
+            self.opcionVentas()
+
+        elif opcion == 2:
+            self.menu()
+
+        else:
+            input("Opción incorrecta. Presiona Enter para continuar.")
+            self.opcionVentas()
 
 if __name__ == '__main__':
     Main()
