@@ -1,7 +1,7 @@
 class Inventario:
     def __init__(self):
         self.productos = []
-    
+     
     def registrar_producto(self, producto):
         # Verificar si el producto ya existe
         for p in self.productos:
