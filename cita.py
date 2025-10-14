@@ -1,12 +1,62 @@
 class Cita:
-    def __init__(self):
-        self.paciente
-        self.optometrista
-        self.fecha_hora
-        self.estado
-
+    def __init__(self, paciente, optometrista, fecha_hora, estado="pendiente"):
+        self.__paciente = paciente 
+        self.__optometrista = optometrista
+        self.__fecha_hora = fecha_hora
+        self.__estado = estado
+        
+    @property
+    def paciente(self):
+        return self.__paciente 
+    
+    @property
+    def optometrista(self):
+        return self.__optometrista
+    
+    @property
+    def fecha_hora(self):
+        return self.__fecha_hora 
+    
+    @property
+    def estado(self):
+        return self.__estado
+    
+    @fecha_hora.setter
+    def fecha_hora(self, nueva_fecha):
+        self.__fecha_hora = nueva_fecha 
+        
+    @estado.setter
+    def estado(self, nuevo_estado):
+        if nuevo_estado in ["pendiente","confirmada","cancelada"]:
+            self.__estado = nuevo_estado
+        else:
+            raise ValueError("Estado invalido.") 
+        
+            
     def confirmar(self):
-        pass
+        if self.__estado == "confirmada":
+            print("La cita esta confirmada")
+        elif self.__estado == "cancelada":
+            print("No se puede confirmar una cita cancelada.")
+        else:
+            self.__estado = "confirmada"
+            print(f"Cita confirmada para {self.__paciente} con {self.__optometrista} el {self.__fecha_hora}.")
+            
 
+    
     def cancelar(self):
-        pass
+        if self.__estado == "cancelada":
+            print("La cita esta cancelada.")
+        else:
+            self.__estado = "cancelada"
+            print(f"cita cancelada para {self.__paciente} con {self.optometrista}.") 
+            
+            
+            
+    def __str__(self):
+        return (f"Cita:\n"
+                f"Paciente      :{self.__paciente}\n"
+                f"Optometrista  :{self.__optometrista}\n"
+                f"Fecha y Hora  :{self.__fecha_hora}\n"
+                f"Estado        :{self.__estado}")    
+        
