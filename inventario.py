@@ -93,7 +93,7 @@ class Inventario:
         for producto in self.productos:
             if producto.stock < 5:
                 productos_bajo_stock.append(producto)
-                print(f"⚠️  ALERTA - {producto.sku}: {producto.stock} unidades (Stock bajo)")
+                print(f" ALERTA - {producto.sku}: {producto.stock} unidades (Stock bajo)")
             else:
                 print(f"✓ {producto.sku}: {producto.stock} unidades")
         
