@@ -27,28 +27,22 @@ class Agenda:
 
 
 
-if __name__ == "__main__":
-    from datetime import datetime
+# if __name__ == "__main__":
+#     from datetime import datetime
     
-    agenda = Agenda()
+#     agenda = Agenda()
 
-    cita1 = Cita("Pedro Ramírez", "Dra. Laura", "2025-11-01 10:00")
-    cita2 = Cita("Lucía Gómez", "Dr. Carlos", "2025-11-02 11:00")
-    cita3 = Cita("Ana López", "Dra. Laura", "2025-11-03 12:00")
-
-    agenda.agendar_cita(cita1)
-    agenda.agendar_cita(cita2)
-    agenda.agendar_cita(cita3)
+    
 
   
-    agenda.ver_agenda()
+#     agenda.ver_agenda()
 
-    cita2.confirmar()
-    cita1.cancelar()
-    cita3.confirmar()
+#     cita2.confirmar()
+#     cita1.cancelar()
+#     cita3.confirmar()
     
-    print(cita2)
-    print(cita1)
-    print(cita3)
+#     print(cita2)
+#     print(cita1)
+#     print(cita3)
 
-    agenda.generar_reporte()
+#     agenda.generar_reporte()

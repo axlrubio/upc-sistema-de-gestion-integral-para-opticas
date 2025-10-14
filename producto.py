@@ -7,10 +7,19 @@ class Producto:
         self.stock = stock
 
     def incrementar_stock(self):
-        pass
+        self.stock += 1
 
     def disminuir_stock(self):
-        pass
+        self.stock -= 1
 
     def ver_detalle(self):
-        pass
+        detalle = ""
+
+        detalle += f"SKU: {self.sku}\n"
+        detalle += f"Marca: {self.marca}\n"
+        detalle += f"Modelo: {self.modelo}\n"
+        detalle += f"Precio: s./ {self.precio}\n"
+        detalle += f"Stock: {self.stock}\n"
+
+        return detalle
+        

@@ -1,7 +1,10 @@
+from paciente import Paciente
+from optometrista import Optometrista
+
 class Cita:
     def __init__(self, paciente, optometrista, fecha_hora, estado="pendiente"):
-        self.__paciente = paciente 
-        self.__optometrista = optometrista
+        self.__paciente: Paciente = paciente 
+        self.__optometrista: Optometrista = optometrista
         self.__fecha_hora = fecha_hora
         self.__estado = estado
         
@@ -32,7 +35,6 @@ class Cita:
         else:
             raise ValueError("Estado invalido.") 
         
-            
     def confirmar(self):
         if self.__estado == "confirmada":
             print("La cita esta confirmada")
@@ -43,20 +45,24 @@ class Cita:
             print(f"Cita confirmada para {self.__paciente} con {self.__optometrista} el {self.__fecha_hora}.")
             
 
-    
     def cancelar(self):
         if self.__estado == "cancelada":
             print("La cita esta cancelada.")
         else:
             self.__estado = "cancelada"
             print(f"cita cancelada para {self.__paciente} con {self.optometrista}.") 
-            
-            
-            
+             
     def __str__(self):
-        return (f"Cita:\n"
-                f"Paciente      :{self.__paciente}\n"
-                f"Optometrista  :{self.__optometrista}\n"
-                f"Fecha y Hora  :{self.__fecha_hora}\n"
-                f"Estado        :{self.__estado}")    
+        detalle = ""
+
+        detalle += "Paciente: \n"
+        detalle += f"  DNI: {self.__paciente.dni} \n"
+        detalle += f"  Nombre: {self.__paciente.nombre} {self.__paciente.apellido} \n"
+        detalle += "Optometrista: \n"
+        detalle += f"  DNI: {self.__optometrista.dni} \n"
+        detalle += f"  Nombre: Dr. {self.__optometrista.nombre} {self.__optometrista.apellido} \n"
+        detalle += f"Fecha y Hora: {self.__fecha_hora} \n"
+        detalle += f"Estado: {self.__estado}"
+
+        return detalle  
         
