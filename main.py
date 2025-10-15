@@ -85,9 +85,9 @@ class Main:
     def menu(self):
         self.limpiar_pantalla()
 
-        print("##########################################")
-        print("# Tu Ojo - Sistema de gestion de opticas #")
-        print("##########################################")
+        print("################################################")
+        print("# FutureVision - Sistema de gestion de opticas #")
+        print("################################################")
         print("")
         print("1.- Agenda")
         print("2.- Inventario")
@@ -131,7 +131,7 @@ class Main:
     def opcionAgenda(self):
         self.limpiar_pantalla()
         print("##########################################")
-        print("#            Tu Ojo - Agenda             #")
+        print("#         FutureVision - Agenda          #")
         print("##########################################")
         print("")
         print("1.- Ver agenda")
@@ -146,7 +146,6 @@ class Main:
             if opcion > 0 and opcion < 5:
                 
                 if opcion == 1:
-                    print(self.agenda.citas)
                     self.agenda.ver_agenda()
                     input("\nPresionar enter para regresar.")
                     self.opcionAgenda()
@@ -232,7 +231,7 @@ class Main:
     def opcionInventario(self):
         self.limpiar_pantalla()
         print("##########################################")
-        print("#          Tu Ojo - Inventario           #")
+        print("#       FutureVision - Inventario        #")
         print("##########################################")
         print("")
         print("1.- Registrar producto")
@@ -355,7 +354,7 @@ class Main:
     def opcionVentas(self):
         self.limpiar_pantalla()
         print("##########################################")
-        print("#           Tu Ojo - Ventas              #")
+        print("#        FutureVision - Ventas           #")
         print("##########################################")
         print("")
         print("1.- Registrar nueva venta")
