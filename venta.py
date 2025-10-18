@@ -43,4 +43,5 @@ class Venta:
             comprobante += f"Saldo: S/. {self.total - sum(self.pagos):.2f}\n"
 
         comprobante += f"==============================\n"
+
         return comprobante

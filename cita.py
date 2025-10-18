@@ -50,7 +50,7 @@ class Cita:
             print("La cita esta cancelada.")
         else:
             self.__estado = "cancelada"
-            print(f"cita cancelada para {self.__paciente} con {self.optometrista}.") 
+            # print(f"cita cancelada para {self.__paciente} con {self.optometrista}.") 
              
     def __str__(self):
         detalle = ""

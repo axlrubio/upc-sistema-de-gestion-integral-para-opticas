@@ -89,10 +89,10 @@ class Main:
         print("# FutureVision - Sistema de gestion de opticas #")
         print("################################################")
         print("")
-        print("1.- Agenda")
-        print("2.- Inventario")
-        print("3.- Personal")
-        print("4.- Ventas")
+        print("1.- Gestion de Pacientes")
+        print("2.- Gestion de Citas")
+        print("3.- Gestion de Inventario")
+        print("4.- Realizar Ventas")
         print("5.- Cerrar sistema")
         print("")
 
@@ -102,13 +102,14 @@ class Main:
             if opcion > 0 and opcion < 6:
                 
                 if opcion == 1:
+                    self.opcionPersonal()
+                
+                elif opcion == 2:
                     self.opcionAgenda()
 
-                elif opcion == 2:
+                elif opcion == 3:
                     self.opcionInventario()
 
-                elif opcion == 3:
-                    self.opcionPersonal()
 
                 elif opcion == 4:
                     self.opcionVentas()
@@ -131,19 +132,20 @@ class Main:
     def opcionAgenda(self):
         self.limpiar_pantalla()
         print("##########################################")
-        print("#         FutureVision - Agenda          #")
+        print("#    FutureVision - Gestión de Citas     #")
         print("##########################################")
         print("")
-        print("1.- Ver agenda")
+        print("1.- Ver agenda del día")
         print("2.- Agendar cita")
         print("3.- Generar reporte")
-        print("4.- Salir")
+        print("4.- Cancelar Cita")
+        print("5.- Salir")
         print("")
 
         try:
             opcion = int(input("Elige una opcion > "))
 
-            if opcion > 0 and opcion < 5:
+            if opcion > 0 and opcion < 6:
                 
                 if opcion == 1:
                     self.agenda.ver_agenda()
@@ -212,6 +214,39 @@ class Main:
                     self.opcionAgenda()
                 
                 elif opcion == 4:
+                    dni_paciente = input("Ingresa el dni del paciente > ")
+
+                    paciente_encontrado = None
+
+                    for paciente in self.pacientes:
+                        if(paciente.dni == dni_paciente):
+                            paciente_encontrado = paciente
+
+                    if paciente_encontrado != None:
+                        citas_paciente = []
+
+                        for cita_paciente in self.agenda.citas:
+                            if(cita_paciente.paciente.dni == paciente_encontrado.dni):
+                                citas_paciente.append(cita_paciente)
+
+                        for index in range(len(citas_paciente)):
+                            print(f"\nCita #{ index + 1 }")
+                            print(f"Optometrista: {citas_paciente[index].optometrista.nombre} {citas_paciente[index].optometrista.apellido}")
+                            print(f"Fecha: {citas_paciente[index].fecha_hora}")
+                            print(f"Estado: {citas_paciente[index].estado}")
+
+                        opcion_cancelar = int(input("\nIngresa el numero de la cita que se cancelara > "))
+
+                        citas_paciente[opcion_cancelar - 1].cancelar()
+
+                        input(f"La cita #{opcion_cancelar} fue cancelada. Presiona Enter para continuar")
+                        self.opcionAgenda()
+
+                    else:
+                        input("No se ha encontrado al paciente, no se puede generar la cita. Presiona Enter para continuar")
+                        self.opcionAgenda()
+
+                elif opcion == 5:
                     self.menu()
 
                 else:
@@ -231,7 +266,7 @@ class Main:
     def opcionInventario(self):
         self.limpiar_pantalla()
         print("##########################################")
-        print("#       FutureVision - Inventario        #")
+        print("#  FutureVision - Gestión de Inventario  #")
         print("##########################################")
         print("")
         print("1.- Registrar producto")
@@ -341,64 +376,135 @@ class Main:
 
 
     def opcionPersonal(self):
-        print("Personal")
+        self.limpiar_pantalla()
+        print("##########################################")
+        print("#  FutureVision - Gestion de Pacientes   #")
+        print("##########################################")
+        print("")
+        print("1.- Registrar Paciente")
+        print("2.- Buscar Paciente")
+        print("3.- Salir")
+        print("")
 
-        for personal in self.optometristas:
-            print(personal)
-            print("\n")
+        opcion = int(input("Elige una opcion > "))
 
-        input(f"Presiona Enter para continuar")
+        if opcion >= 1 and opcion < 4:
+            if opcion == 1:
+                dni = input("Ingresa el DNI del paciente > ")
+                nombre = input("Ingresa el nombre del paciente > ")
+                apellido = input("Ingresa el apellido del paciente > ")
+                telefono = input("Ingresa el telefono del paciente > ")
+                direccion = input("Ingresa la direccion del paciente > ")
+
+                paciente = Paciente(dni, nombre, apellido, telefono, direccion)
+
+                self.pacientes.append(paciente)
+
+                input("Se ha creado al paciente correctamente. Presiona Enter para continuar")
+                self.opcionPersonal()
+
+            elif opcion == 2:
+                dni_paciente = input("\nIngresa el dni del paciente > ")
+
+                paciente_encontrado = None
+
+                for paciente in self.pacientes:
+                    if(paciente.dni == dni_paciente):
+                        paciente_encontrado = paciente
+
+                if paciente_encontrado != None:
+                    datos_paciente = "\nDatos del paciente encontrados\n"
+                    datos_paciente += "-----------------------------\n"
+                    datos_paciente += "DNI: " + paciente_encontrado.dni
+                    datos_paciente += "\nNombre: " + paciente_encontrado.nombre + " " + paciente_encontrado.apellido
+                    datos_paciente += "\nTelefono: " + paciente_encontrado.telefono
+                    datos_paciente += "\nDirección: " + paciente_encontrado.direccion
+                    datos_paciente += ""
+
+                    print(datos_paciente)
+
+                    input("\nSe ha encontrado al paciente. Presiona Enter para continuar")
+                    self.opcionPersonal()
+                else:
+                    input("\nNo se ha encontrado al paciente. Presiona Enter para continuar")
+                    self.opcionPersonal()
+
+            elif opcion == 3:
+                self.opcionAgenda()
+            
+            else:
+                input("Has ingresado una opcion incorrecta. Presiona Enter para continuar")
+                self.opcionPersonal()
+        else:
+            input("Has ingresado una opcion incorrecta. Presiona Enter para continuar")
+            self.opcionPersonal()
 
         self.menu()
 
     def opcionVentas(self):
         self.limpiar_pantalla()
         print("##########################################")
-        print("#        FutureVision - Ventas           #")
+        print("#      FutureVision - Realizar Venta     #")
         print("##########################################")
         print("")
-        print("1.- Registrar nueva venta")
+        print("1.- Crear nueva orden de venta")
         print("2.- Salir")
         print("")
 
         opcion = int(input("Elige una opcion > "))
 
+        print("")
+
         if opcion == 1:
-            dni_paciente = input("Ingresa el DNI del paciente > ")
+            for producto in self.inventario.productos:
+                print(f"SKU: {producto.sku} - Tipo: {str(producto.__class__.__name__)} - Marca: {producto.marca} - Modelo: {producto.modelo} - Cantidad: {producto.stock}")
+
             paciente_encontrado = None
 
-            for paciente in self.pacientes:
-                if paciente.dni == dni_paciente:
-                    paciente_encontrado = paciente
+            while True:
+                dni_paciente = input("\nIngresa el dni del paciente > ")
 
-            if paciente_encontrado is None:
-                print("Paciente no encontrado, primero debes registrarlo en la agenda.")
-                input("Presiona Enter para continuar.")
-                self.opcionVentas()
-                return
-            
-            productos = []
+                for paciente in self.pacientes:
+                    if(paciente.dni == dni_paciente):
+                        paciente_encontrado = paciente
 
-            monto = 0
+                if paciente_encontrado != None:
+                    break
+                else:
+                    input("El DNI del paciente no existe. Presiona Enter para continuar")
+
+            carrito_productos = []
+            producto_con_stock = True
 
             while True:
-                sku = input("Ingresa SKU del producto (o 'fin' para terminar) > ")
+                sku_producto_vender = input("\nIngresa el SKU del producto > ")
 
-                if sku.lower() == "fin":
-                    break
+                producto_elegido = None
 
-                producto = self.inventario.buscar_producto(sku)
+                for producto in self.inventario.productos:
+                    if producto.sku == sku_producto_vender:
+                        if producto.stock < 1:
+                            producto_con_stock = False
+                        else:
+                            producto_elegido = producto
 
-                if producto is None:
-                    print("Producto no encontrado.")
+                if producto_con_stock and producto_elegido != None:
+                    carrito_productos.append(producto_elegido)
+                    desicion = input("\nDesea continuar con la venta (si / no)> ")
+
+                    if desicion == 'si':
+                        continue
+                    else:
+                        break
+                else:
+                    input("El producto no cuenta con stock. Presiona Enter para continuar.")
                     continue
-                productos.append(producto)
 
-            venta = Venta( uuid.uuid4(), datetime.now().strftime("%Y-%m-%d %H:%M"), productos, paciente_encontrado )
+            nueva_venta = Venta(uuid.uuid4(), datetime.now().strftime("%Y-%m-%d %H:%M"), carrito_productos, paciente_encontrado)
 
-            print(venta.entregar_comprobante())
+            print(nueva_venta.entregar_comprobante())
 
-            input("\nVenta registrada con éxito. Presiona Enter para continuar.")
+            input("Se ha realizado la venta correctamente. Presiona Enter para continuar.")
             self.opcionVentas()
 
         elif opcion == 2:

@@ -7,11 +7,11 @@ class Optometrista(Persona):
         self.id_medico = id_medico
         self.especialidad = especialidad
 
-    def __str__(self):
-        info_persona = super().__str__()
-        info_optometrista = (
-            "\n--- Datos Profesionales ---\n"
-            f"ID Médico: {self.id_medico}\n"
-            f"Especialidad: {self.especialidad}"
-        )
-        return info_persona + info_optometrista
+    # def __str__(self):
+    #     info_persona = super().__str__()
+    #     info_optometrista = (
+    #         "\n--- Datos Profesionales ---\n"
+    #         f"ID Médico: {self.id_medico}\n"
+    #         f"Especialidad: {self.especialidad}"
+    #     )
+    #     return info_persona + info_optometrista
